@@ -1,20 +1,18 @@
 import requests
-from datetime import datetime
-import pytz
+import json
 
-tz = pytz.timezone('Asia/Kolkata') 
-datetime = datetime.now(tz)
-intime = datetime.strftime("%H:%M:%S")
-createdat = datetime.strftime("%H:%M:%S")
-updatedat = datetime.strftime("%H:%M:%S")
+rfid = input()
+url = "https://intent-sunbeam-40.hasura.app/v1/graphql"
+ 
+headers = {"Content-Type": "application/json; charset=utf-8", "x-hasura-admin-secret" : "4E9fBl6pQoyEL138Ov9jmoY3xnKtMpKm2KtrHWHPOUdcXzMHBzvII9CDooZZH5Ay"}
 
-rfid_key = str(input(""))
+data = {
+    "rfid_key": rfid,
+}
 
-payload = {"rfid_key" : rfid_key , "in_time" : intime , "created_at" : createdat , "updated_at" : updatedat}
-
-print(payload)
-
-###r = requests.post("", data = payload)
-
+response = requests.post(url, headers=headers, json=data)
+ 
+print("Status Code", response.status_code)
+print("JSON Response ", response.json())
 
 
